@@ -1,8 +1,20 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from django.views.generic.edit import CreateView
+from .models import *
+from .serializer import *
 
 # Create your views here.
-def home(request):
-    # Your home page logic here
-    return render(request, 'home.html')
+
+class ProductsViewSets(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class OrdersViewSets(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+
+class OrderItemViewSets(viewsets.ModelViewSet):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
