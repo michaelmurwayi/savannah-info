@@ -11,4 +11,5 @@ router.register(r'order-items', OrderItemViewSets, basename='order-items')
 urlpatterns = [
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('', include(router.urls)),
+    path('dashboard/', include('dashboard.urls'))
 ]
