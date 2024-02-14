@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,8 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+    'app',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.openid',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        # other authentication classes...
+    )
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'Orders.urls'
@@ -103,6 +121,36 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_CLASSES = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.TokenAuthentication',
+    'django.contrib.auth.backends.ModelBackend', 
+)
+
+# OpenID settings
+SOCIALACCOUNT_PROVIDERS = {
+    'openid': {
+        'SERVERS': [{
+            'idp': 'https://your-openid-provider.com',
+            'name': 'Your OpenID Connect Provider',
+        }],
+    },
+}
+
+AUTH_USER_MODEL =  "app.Customer"
+
+ACCOUNT_AUTHENTICATION_METHOD = 'phonenumber'  # Use 'username', 'email', or 'username_email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # Use 'none', 'mandatory', or 'optional'
+ACCOUNT_EMAIL_REQUIRED = True
+
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = '/home'
+
 
 
 # Internationalization
