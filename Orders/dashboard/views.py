@@ -7,3 +7,7 @@ class HomeView(TemplateView):
 
 class ProductView(TemplateView):
     template_name = 'products.html'
+
+
+class OrdersView(TemplateView):
+    template_name = 'orders.html'
