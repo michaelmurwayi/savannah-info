@@ -97,28 +97,21 @@
     </header>
     
     <main>
+        {% for product in data %}
         <div class="product">
-            <img src="product1.jpg" alt="Product 1">
-            <h2>Product 1</h2>
-            <p>$19.99</p>
-            <button>Add to Cart</button>
+            <img src= "/static/images/{{product.name}}.jpg" alt={{product.name}}>
+            <h2>{{product.name}}</h2>
+            <p>Price: {{product.price}} $</p>
+            <p>Quantity: {{product.quantity}}</p>
+            <button>Add to Orders</button>
         </div>
-        <p>we are {{ data }}</p>
-    
-        <div class="product">
-            <img src="product2.jpg" alt="Product 2">
-            <h2>Product 2</h2>
-            <p>$24.99</p>
-            <button>Add to Cart</button>
-        </div>
-    
+        {% endfor %}
+        
         <!-- Add more product entries as needed -->
     
     </main>
     
-    <footer>
-        <p>&copy; 2022 Your Company</p>
-    </footer>
+    
     
     </body>
     </html>
