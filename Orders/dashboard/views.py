@@ -27,3 +27,7 @@ class ProductView(TemplateView):
 
 class OrdersView(TemplateView):
     template_name = 'orders.html'
+
+
+    def post(self, request):
+        return render(self.template_name)
